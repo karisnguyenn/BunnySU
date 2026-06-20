@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.lsplugin.apksign)
+    alias(libs.plugins.ksp)
     id("kotlin-parcelize")
 }
 
@@ -161,55 +162,37 @@ base {
 
 dependencies {
     implementation(libs.androidx.activity.compose)
-
     implementation(platform(libs.androidx.compose.bom))
+
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
 
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.compose.destinations.core)
+    ksp(libs.compose.destinations.ksp)
 
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-
-    implementation(libs.androidx.navigation3.runtime)
-    implementation(libs.androidx.navigationevent.compose)
 
     implementation(libs.com.github.topjohnwu.libsu.core)
     implementation(libs.com.github.topjohnwu.libsu.service)
     implementation(libs.com.github.topjohnwu.libsu.io)
-
     implementation(libs.dev.rikka.rikkax.parcelablelist)
-
     implementation(libs.kotlinx.coroutines.core)
-
     implementation(libs.commonmark)
     implementation(libs.commonmark.ext.gfm.tables)
     implementation(libs.commonmark.ext.gfm.strikethrough)
     implementation(libs.commonmark.ext.autolink)
     implementation(libs.commonmark.ext.task.list.items)
-
     implementation(libs.androidx.webkit)
-
     implementation(libs.lsposed.cxx)
-
     implementation(libs.hiddenapibypass)
-
-    implementation(libs.miuix.ui)
-    implementation(libs.miuix.icons)
-    implementation(libs.miuix.navigation3.ui)
-    implementation(libs.miuix.preference)
-    implementation(libs.miuix.blur)
-
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)
-
     implementation(libs.material.kolor)
-
     implementation(libs.appiconloader)
 }
 

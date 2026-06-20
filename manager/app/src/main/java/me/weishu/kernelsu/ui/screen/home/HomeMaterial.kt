@@ -145,7 +145,7 @@ fun HomePagerMaterial(
             }
             InfoCard(systemInfo = state.systemInfo)
             DonateCard(onOpenUrl = actions.onOpenUrl)
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(bottomInnerPadding))
         }
     }
 }
