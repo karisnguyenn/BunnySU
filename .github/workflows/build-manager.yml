@@ -188,7 +188,7 @@ jobs:
 
       - name: Build with Gradle
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "pull_request" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "${{ github.event_name }}" = "push" ]; then
             ./gradlew clean assembleRelease -PIS_PR_BUILD=true
           else
             ./gradlew clean assembleRelease
@@ -276,7 +276,7 @@ jobs:
           PROD_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           PROD_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "pull_request" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "${{ github.event_name }}" = "push" ]; then
             echo "$PR_KEYSTORE" | base64 -d > pr-key.jks
             echo "SIGN_KEYSTORE_FILE=pr-key.jks" >> $GITHUB_ENV
             echo "SIGN_KEY_ALIAS=pr-key" >> $GITHUB_ENV
