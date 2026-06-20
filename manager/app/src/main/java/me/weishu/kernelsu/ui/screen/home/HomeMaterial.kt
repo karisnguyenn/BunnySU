@@ -388,30 +388,24 @@ private fun StatusCard(
 }
 
 @Composable
-fun WarningCard(
-    message: String, color: Color = MaterialTheme.colorScheme.error, onClick: (() -> Unit)? = null
+private fun WarningCard(
+    message: String,
+    color: Color = MaterialTheme.colorScheme.error,
+    onClick: (() -> Unit)? = null
 ) {
-    ElevatedCard(
-        colors = CardDefaults.elevatedCardColors(
-            containerColor = color
-        )
-    ) {
+    val content = @Composable {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .then(onClick?.let { Modifier.clickable { it() } } ?: Modifier)
-                .padding(24.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .padding(24.dp)
         ) {
-            Icon(
-                imageVector = Icons.Filled.SentimentDissatisfied,
-                contentDescription = null,
-                 modifier = Modifier.padding(end = 20.dp)
-            )
-            Text(
-                text = message, style = MaterialTheme.typography.bodyMedium
-            )
+            Text(text = message, style = MaterialTheme.typography.bodyMedium)
         }
+    }
+    if (onClick != null) {
+        TonalCard(containerColor = color, onClick = onClick, content = content)
+    } else {
+        TonalCard(containerColor = color, content = content)
     }
 }
 
