@@ -89,3 +89,7 @@ fun BottomBar(
 
 @Composable
 fun SideRail(
+    modifier: Modifier = Modifier
+) {
+    NavigationRailMaterial(modifier)
+}
