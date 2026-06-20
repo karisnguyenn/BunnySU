@@ -86,4 +86,21 @@ fun TemplateEditorScreen(template: TemplateViewModel.TemplateInfo, readOnly: Boo
             currentTemplate = currentTemplate.copy(description = value)
         },
         onProfileChange = { profile ->
-            currentTemplate = current
+            currentTemplate = currentTemplate.copy(
+                uid = profile.uid,
+                gid = profile.gid,
+                groups = profile.groups,
+                capabilities = profile.capabilities,
+                context = profile.context,
+                namespace = profile.namespace,
+                rules = profile.rules.split("\n"),
+                flags = profile.flags.toRootProfileFlags().toOrdinalList(),
+            )
+        },
+    )
+
+    TemplateEditorScreenMaterial(
+        state = uiState,
+        actions = actions,
+    )
+}
