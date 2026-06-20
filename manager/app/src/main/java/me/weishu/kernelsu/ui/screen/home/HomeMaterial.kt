@@ -189,6 +189,7 @@ private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
     TopAppBar(
+        modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
         title = {
             Row(
                 verticalAlignment = Alignment.CenterVertically
