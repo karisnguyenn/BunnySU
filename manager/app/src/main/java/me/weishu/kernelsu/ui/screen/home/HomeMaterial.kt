@@ -23,6 +23,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Warning
+// --- Đã thêm các thư viện Icon và UI cần thiết ---
+import androidx.compose.material.icons.filled.AutoAwesomeMotion
+import androidx.compose.material.icons.filled.Smartphone
+import androidx.compose.material.icons.filled.Fingerprint
+import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.filled.LocalPolice
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+// -------------------------------------------------
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -175,7 +186,23 @@ private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
     LargeFlexibleTopAppBar(
-        title = { Text(stringResource(R.string.app_name)) },
+        title = {
+            // Đã tùy biến Row để chứa Logo Thỏ Bunny và Font chữ Black
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_bunny_su),
+                    contentDescription = null,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Black
+                )
+            }
+        },
         actions = { RebootListPopup() },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface,
@@ -436,23 +463,64 @@ private fun InfoCard(systemInfo: SystemInfo) {
                 .fillMaxWidth()
                 .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 16.dp)
         ) {
+            // Hàm vẽ cấu hình đã được viết lại để hỗ trợ Icon và đổi Font
             @Composable
-            fun InfoCardItem(label: String, content: String) {
-                Text(text = label, style = MaterialTheme.typography.bodyLarge)
-                Text(
-                    text = content,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.outline
-                )
+            fun InfoCardItem(label: String, content: String, icon: Any? = null) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (icon != null) {
+                        when (icon) {
+                            is ImageVector -> Icon(
+                                imageVector = icon,
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 20.dp)
+                            )
+                            is Painter -> Icon(
+                                painter = icon,
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 20.dp)
+                            )
+                        }
+                    }
+                    Column {
+                        Text(
+                            text = label,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Text(
+                            text = content,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.outline,
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
+                    }
+                }
             }
 
-            InfoCardItem(stringResource(R.string.home_manager_version), systemInfo.managerVersion)
+            // Gán Icon cho từng dòng giống bản tham khảo
+            InfoCardItem(
+                label = stringResource(R.string.home_manager_version),
+                content = systemInfo.managerVersion,
+                icon = Icons.Filled.AutoAwesomeMotion
+            )
             Spacer(Modifier.height(16.dp))
-            InfoCardItem(stringResource(R.string.home_kernel), systemInfo.kernelVersion)
+            InfoCardItem(
+                label = stringResource(R.string.home_kernel),
+                content = systemInfo.kernelVersion,
+                icon = painterResource(R.drawable.ic_bunny_su)
+            )
             Spacer(Modifier.height(16.dp))
-            InfoCardItem(stringResource(R.string.home_device_model), systemInfo.deviceModel)
+            InfoCardItem(
+                label = stringResource(R.string.home_device_model),
+                content = systemInfo.deviceModel,
+                icon = Icons.Filled.Smartphone
+            )
             Spacer(Modifier.height(16.dp))
-            InfoCardItem(stringResource(R.string.home_fingerprint), systemInfo.fingerprint)
+            InfoCardItem(
+                label = stringResource(R.string.home_fingerprint),
+                content = systemInfo.fingerprint,
+                icon = Icons.Filled.Fingerprint
+            )
             Spacer(Modifier.height(16.dp))
             val selinuxDisplay = when (systemInfo.selinuxStatus) {
                 "Enforcing" -> stringResource(R.string.selinux_status_enforcing)
@@ -460,7 +528,11 @@ private fun InfoCard(systemInfo: SystemInfo) {
                 "Disabled" -> stringResource(R.string.selinux_status_disabled)
                 else -> stringResource(R.string.selinux_status_unknown)
             }
-            InfoCardItem(stringResource(R.string.home_selinux_status), selinuxDisplay)
+            InfoCardItem(
+                label = stringResource(R.string.home_selinux_status),
+                content = selinuxDisplay,
+                icon = Icons.Filled.Security
+            )
             Spacer(Modifier.height(16.dp))
             val seccompDisplay = when (systemInfo.seccompStatus) {
                 -1 -> stringResource(R.string.seccomp_status_not_supported)
@@ -469,7 +541,11 @@ private fun InfoCard(systemInfo: SystemInfo) {
                 2 -> stringResource(R.string.seccomp_status_filter)
                 else -> stringResource(R.string.seccomp_status_unknown)
             }
-            InfoCardItem(stringResource(R.string.home_seccomp_status), seccompDisplay)
+            InfoCardItem(
+                label = stringResource(R.string.home_seccomp_status),
+                content = seccompDisplay,
+                icon = Icons.Filled.LocalPolice
+            )
         }
     }
 }
