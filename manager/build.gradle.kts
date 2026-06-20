@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.agp.app) apply false
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.lsplugin.apksign) apply false
 }
 
 val androidMinSdkVersion by extra(31)
