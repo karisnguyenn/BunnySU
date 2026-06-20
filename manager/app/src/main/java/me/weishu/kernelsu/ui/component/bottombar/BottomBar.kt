@@ -16,10 +16,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
-import me.weishu.kernelsu.ui.LocalUiMode
-import me.weishu.kernelsu.ui.UiMode
-import top.yukonga.miuix.kmp.blur.Backdrop
-import top.yukonga.miuix.kmp.blur.LayerBackdrop
 import kotlin.math.abs
 
 class MainPagerState(
@@ -86,23 +82,10 @@ fun rememberMainPagerState(
 
 @Composable
 fun BottomBar(
-    blurBackdrop: LayerBackdrop?,
-    backdrop: Backdrop,
     modifier: Modifier = Modifier,
 ) {
-    when (LocalUiMode.current) {
-        UiMode.Miuix -> BottomBarMiuix(blurBackdrop, backdrop, modifier)
-        UiMode.Material -> BottomBarMaterial()
-    }
+    BottomBarMaterial()
 }
 
 @Composable
 fun SideRail(
-    blurBackdrop: LayerBackdrop?,
-    modifier: Modifier = Modifier,
-) {
-    when (LocalUiMode.current) {
-        UiMode.Miuix -> NavigationRailMiuix(blurBackdrop, modifier)
-        UiMode.Material -> NavigationRailMaterial(modifier)
-    }
-}

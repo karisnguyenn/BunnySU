@@ -51,7 +51,6 @@ fun TemplateEditorScreen(template: TemplateViewModel.TemplateInfo, readOnly: Boo
     )
 
     fun saveCurrentTemplate() {
-        // Lưu template, không còn kiểm tra Miuix mode
         if (saveTemplate(currentTemplate, isCreation)) {
             navigator.setResult("template_edit", true)
         } else {
@@ -87,21 +86,4 @@ fun TemplateEditorScreen(template: TemplateViewModel.TemplateInfo, readOnly: Boo
             currentTemplate = currentTemplate.copy(description = value)
         },
         onProfileChange = { profile ->
-            currentTemplate = currentTemplate.copy(
-                uid = profile.uid,
-                gid = profile.gid,
-                groups = profile.groups,
-                capabilities = profile.capabilities,
-                context = profile.context,
-                namespace = profile.namespace,
-                rules = profile.rules.split("\n"),
-                flags = profile.flags.toRootProfileFlags().toOrdinalList(),
-            )
-        },
-    )
-
-    TemplateEditorScreenMaterial(
-        state = uiState,
-        actions = actions,
-    )
-}
+            currentTemplate = current
