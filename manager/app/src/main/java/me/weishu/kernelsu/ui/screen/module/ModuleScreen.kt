@@ -21,8 +21,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import me.weishu.kernelsu.R
-import me.weishu.kernelsu.ui.LocalUiMode
-import me.weishu.kernelsu.ui.UiMode
 import me.weishu.kernelsu.ui.navigation3.LocalNavigator
 import me.weishu.kernelsu.ui.navigation3.Route
 import me.weishu.kernelsu.ui.screen.flash.FlashIt
@@ -35,7 +33,6 @@ fun ModulePager(
     bottomInnerPadding: Dp,
     isCurrentPage: Boolean = true
 ) {
-    val uiMode = LocalUiMode.current
     val navigator = LocalNavigator.current
     val context = LocalContext.current
     val resource = LocalResources.current
@@ -74,27 +71,13 @@ fun ModulePager(
     }
 
     val actions = ModuleActions(
-        onRefresh = {
-            viewModel.fetchModuleList(checkUpdate = true)
-        },
-        onSearchStatusChange = {
-            viewModel.updateSearchStatus(it)
-        },
-        onSearchTextChange = { text ->
-            viewModel.updateSearchText(text)
-        },
-        onClearSearch = {
-            viewModel.updateSearchText("")
-        },
-        onRequestUpdateConfirmation = { module, updateInfo ->
-            viewModel.requestUpdateConfirmation(module, updateInfo)
-        },
-        onRequestUninstallConfirmation = { module ->
-            viewModel.requestUninstallConfirmation(module)
-        },
-        onDismissConfirmRequest = {
-            viewModel.dismissConfirmRequest()
-        },
+        onRefresh = { viewModel.fetchModuleList(checkUpdate = true) },
+        onSearchStatusChange = { viewModel.updateSearchStatus(it) },
+        onSearchTextChange = { text -> viewModel.updateSearchText(text) },
+        onClearSearch = { viewModel.updateSearchText("") },
+        onRequestUpdateConfirmation = { module, updateInfo -> viewModel.requestUpdateConfirmation(module, updateInfo) },
+        onRequestUninstallConfirmation = { module -> viewModel.requestUninstallConfirmation(module) },
+        onDismissConfirmRequest = { viewModel.dismissConfirmRequest() },
         onConfirmUpdate = { request ->
             scope.launch {
                 download(
@@ -116,12 +99,8 @@ fun ModulePager(
             viewModel.dismissConfirmRequest()
         },
         onOpenRepo = { navigator.push(Route.ModuleRepo) },
-        onToggleSortActionFirst = {
-            viewModel.toggleSortActionFirst()
-        },
-        onToggleSortEnabledFirst = {
-            viewModel.toggleSortEnabledFirst()
-        },
+        onToggleSortActionFirst = { viewModel.toggleSortActionFirst() },
+        onToggleSortEnabledFirst = { viewModel.toggleSortEnabledFirst() },
         onOpenWebUi = { module ->
             webUILauncher.launch(
                 Intent(context, WebUIActivity::class.java)
@@ -129,15 +108,9 @@ fun ModulePager(
                     .putExtra("id", module.id)
             )
         },
-        onToggleModule = { module ->
-            viewModel.toggleModule(module)
-        },
-        onUninstallModule = { module ->
-            viewModel.uninstallModule(module)
-        },
-        onUndoUninstallModule = { module ->
-            viewModel.undoUninstallModule(module)
-        },
+        onToggleModule = { module -> viewModel.toggleModule(module) },
+        onUninstallModule = { module -> viewModel.uninstallModule(module) },
+        onUndoUninstallModule = { module -> viewModel.undoUninstallModule(module) },
         onOpenFlash = { uris ->
             if (uris.isNotEmpty()) {
                 navigator.push(Route.Flash(FlashIt.FlashModules(uris)))
@@ -150,21 +123,11 @@ fun ModulePager(
         },
     )
 
-    when (uiMode) {
-        UiMode.Miuix -> ModulePagerMiuix(
-            uiState = rawUiState,
-            confirmDialogState = rawUiState.confirmDialogState,
-            moduleEvent = viewModel.moduleEvent,
-            actions = actions,
-            bottomInnerPadding = bottomInnerPadding,
-        )
-
-        UiMode.Material -> ModulePagerMaterial(
-            uiState = rawUiState,
-            confirmDialogState = rawUiState.confirmDialogState,
-            moduleEvent = viewModel.moduleEvent,
-            actions = actions,
-            bottomInnerPadding = bottomInnerPadding,
-        )
-    }
+    ModulePagerMaterial(
+        uiState = rawUiState,
+        confirmDialogState = rawUiState.confirmDialogState,
+        moduleEvent = viewModel.moduleEvent,
+        actions = actions,
+        bottomInnerPadding = bottomInnerPadding,
+    )
 }

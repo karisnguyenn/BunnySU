@@ -54,20 +54,8 @@ data class AppSettings(
 object ThemeController {
     fun getAppSettings(context: Context): AppSettings {
         val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val uiMode = prefs.getString("ui_mode", UiMode.DEFAULT_VALUE) ?: UiMode.DEFAULT_VALUE
-        var colorModeValue = prefs.getInt("color_mode", ColorMode.SYSTEM.value)
-
-        if (uiMode == "miuix") {
-            val miuixMonet = prefs.getBoolean("miuix_monet", false)
-            val colorMode = ColorMode.fromValue(colorModeValue)
-            colorModeValue = if (!miuixMonet && colorMode.isMonet) {
-                colorMode.toNonMonetMode()
-            } else if (miuixMonet && !colorMode.isMonet) {
-                colorMode.toMonetMode()
-            } else {
-                colorModeValue
-            }
-        }
+        // Ép cứng uiMode luôn là material, bỏ qua cấu hình miuix cũ
+        val colorModeValue = prefs.getInt("color_mode", ColorMode.SYSTEM.value)
 
         val colorMode = ColorMode.fromValue(colorModeValue)
         val keyColor = prefs.getInt("key_color", 0)
@@ -97,17 +85,10 @@ fun KernelSUTheme(
     val context = LocalContext.current
     val currentAppSettings = appSettings ?: ThemeController.getAppSettings(context)
 
-    when (uiMode) {
-        UiMode.Miuix -> MiuixKernelSUTheme(
-            appSettings = currentAppSettings,
-            content = content
-        )
-
-        UiMode.Material -> MaterialKernelSUTheme(
-            appSettings = currentAppSettings,
-            content = content
-        )
-    }
+    MaterialKernelSUTheme(
+        appSettings = currentAppSettings,
+        content = content
+    )
 }
 
 @Composable
@@ -119,7 +100,6 @@ fun isInDarkTheme(): Boolean {
         else -> isSystemInDarkTheme()  // Follow system (0 or default)
     }
 }
-
 
 val LocalColorMode = staticCompositionLocalOf { 0 }
 

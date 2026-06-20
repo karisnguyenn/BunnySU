@@ -1,6 +1,5 @@
 package me.weishu.kernelsu.ui.screen.appprofile
 
-import android.widget.Toast
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,8 +17,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import me.weishu.kernelsu.Natives
 import me.weishu.kernelsu.R
-import me.weishu.kernelsu.ui.LocalUiMode
-import me.weishu.kernelsu.ui.UiMode
 import me.weishu.kernelsu.ui.navigation3.LocalNavigator
 import me.weishu.kernelsu.ui.navigation3.Route
 import me.weishu.kernelsu.ui.util.forceStopApp
@@ -32,7 +29,6 @@ import me.weishu.kernelsu.ui.viewmodel.getTemplateInfoById
 
 @Composable
 fun AppProfileScreen(uid: Int) {
-    val uiMode = LocalUiMode.current
     val navigator = LocalNavigator.current
     val context = LocalContext.current
     val snackbarHost = remember { SnackbarHostState() }
@@ -76,11 +72,7 @@ fun AppProfileScreen(uid: Int) {
 
     fun showMessage(message: String) {
         scope.launch {
-            if (uiMode == UiMode.Material) {
-                snackbarHost.showSnackbar(message)
-            } else {
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-            }
+            snackbarHost.showSnackbar(message)
         }
     }
 
@@ -124,24 +116,16 @@ fun AppProfileScreen(uid: Int) {
                     showMessage(failToUpdateAppProfile)
                 } else {
                     profile = updatedProfile
-                    if (uiMode == UiMode.Material) {
-                        viewModel.loadAppList()
-                    }
+                    // Do ép Material nên loadAppList luôn chạy
+                    viewModel.loadAppList()
                 }
             }
         },
     )
 
-    when (uiMode) {
-        UiMode.Miuix -> AppProfileScreenMiuix(
-            state = state,
-            actions = actions,
-        )
-
-        UiMode.Material -> AppProfileScreenMaterial(
-            state = state,
-            actions = actions,
-            snackBarHost = snackbarHost,
-        )
-    }
+    AppProfileScreenMaterial(
+        state = state,
+        actions = actions,
+        snackBarHost = snackbarHost,
+    )
 }

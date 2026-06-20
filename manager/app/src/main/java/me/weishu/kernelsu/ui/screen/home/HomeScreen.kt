@@ -21,8 +21,6 @@ import kotlinx.coroutines.withContext
 import me.weishu.kernelsu.R
 import me.weishu.kernelsu.magica.MagicaService
 import me.weishu.kernelsu.ui.LocalMainPagerState
-import me.weishu.kernelsu.ui.LocalUiMode
-import me.weishu.kernelsu.ui.UiMode
 import me.weishu.kernelsu.ui.component.dialog.rememberLoadingDialog
 import me.weishu.kernelsu.ui.navigation3.Navigator
 import me.weishu.kernelsu.ui.navigation3.Route
@@ -59,8 +57,6 @@ fun HomePager(
         onJailbreakClick = {
             loadingDialog.showLoading()
             context.startService(Intent(context, MagicaService::class.java))
-            // Manager will be force-stopped and restarted by late-load on success.
-            // If that doesn't happen within timeout, jailbreak likely failed.
             scope.launch(Dispatchers.IO) {
                 delay(30_000)
                 withContext(Dispatchers.Main) {
@@ -71,17 +67,10 @@ fun HomePager(
         },
     )
 
-    when (LocalUiMode.current) {
-        UiMode.Miuix -> HomePagerMiuix(
-            state = uiState,
-            actions = actions,
-            bottomInnerPadding = bottomInnerPadding,
-        )
 
-        UiMode.Material -> HomePagerMaterial(
-            state = uiState,
-            actions = actions,
-            bottomInnerPadding = bottomInnerPadding,
-        )
-    }
+    HomePagerMaterial(
+        state = uiState,
+        actions = actions,
+        bottomInnerPadding = bottomInnerPadding,
+    )
 }
