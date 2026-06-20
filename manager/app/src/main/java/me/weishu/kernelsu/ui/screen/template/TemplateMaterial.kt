@@ -58,6 +58,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.font.FontWeight
 import me.weishu.kernelsu.R
 import me.weishu.kernelsu.data.model.TemplateInfo
 import me.weishu.kernelsu.ui.component.material.SegmentedItem
@@ -273,7 +274,7 @@ private fun TopBar(
     val haptic = LocalHapticFeedback.current
     LargeFlexibleTopAppBar(
         title = {
-            Text(stringResource(R.string.settings_profile_template)),
+            Text(stringResource(R.string.settings_profile_template));
             fontWeight = FontWeight.Black
         },
         navigationIcon = {
