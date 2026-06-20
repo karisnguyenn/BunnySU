@@ -538,7 +538,7 @@ private fun InfoCard(systemInfo: SystemInfo) {
             InfoCardItem(
                 label = stringResource(R.string.home_kernel),
                 content = systemInfo.kernelVersion,
-                icon = painterResource(R.drawable.ic_bunny_su)
+                icon = painterResource(R.drawable.ic_linux)
             )
             Spacer(Modifier.height(16.dp))
             InfoCardItem(
