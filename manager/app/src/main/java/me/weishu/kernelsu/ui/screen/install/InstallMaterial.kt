@@ -251,7 +251,12 @@ private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
     LargeFlexibleTopAppBar(
-        title = { Text(stringResource(R.string.install)) },
+                title = { 
+                    Text(
+                        text = stringResource(R.string.install),
+                        fontWeight = FontWeight.Black
+                    ) 
+                },
         navigationIcon = {
             IconButton(onClick = onBack) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)

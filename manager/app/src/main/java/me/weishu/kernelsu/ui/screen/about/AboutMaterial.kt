@@ -50,7 +50,12 @@ fun AboutScreenMaterial(
     Scaffold(
         topBar = {
             LargeFlexibleTopAppBar(
-                title = { Text(state.title) },
+                title = { 
+                    Text(
+                        text = state.title,
+                        fontWeight = FontWeight.Black
+                    ) 
+                },
                 navigationIcon = {
                     IconButton(
                         onClick = actions.onBack
@@ -99,7 +104,7 @@ fun AboutScreenMaterial(
                     Text(
                         modifier = Modifier.padding(top = 12.dp),
                         text = state.appName,
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.SemiBold,
                         fontSize = MaterialTheme.typography.headlineMedium.fontSize
                     )
                     Text(

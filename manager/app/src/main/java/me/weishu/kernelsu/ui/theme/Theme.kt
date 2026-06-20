@@ -54,7 +54,6 @@ data class AppSettings(
 object ThemeController {
     fun getAppSettings(context: Context): AppSettings {
         val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        // Ép cứng uiMode luôn là material, bỏ qua cấu hình miuix cũ
         val colorModeValue = prefs.getInt("color_mode", ColorMode.SYSTEM.value)
 
         val colorMode = ColorMode.fromValue(colorModeValue)

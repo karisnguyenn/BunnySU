@@ -264,7 +264,12 @@ fun ModulePagerMaterial(
     Scaffold(
         topBar = {
             SearchAppBar(
-                title = { Text(stringResource(R.string.module)) },
+                title = { 
+                    Text(
+                        text = stringResource(R.string.module),
+                        fontWeight = FontWeight.Black
+                    ) 
+                },
                 searchText = uiState.searchStatus.searchText,
                 onSearchTextChange = actions.onSearchTextChange,
                 onClearClick = actions.onClearSearch,

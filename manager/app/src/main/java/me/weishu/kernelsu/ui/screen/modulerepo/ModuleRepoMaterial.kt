@@ -132,7 +132,12 @@ fun ModuleRepoScreenMaterial(
         topBar = {
             SearchAppBar(
                 snackbarHostState = snackbarHostState,
-                title = { Text(text = stringResource(R.string.module_repos)) },
+                title = { 
+                    Text(
+                        text = stringResource(R.string.module_repos),
+                        fontWeight = FontWeight.Black
+                    ) 
+                },
                 searchText = state.searchStatus.searchText,
                 onSearchTextChange = actions.onSearchTextChange,
                 onClearClick = actions.onClearSearch,

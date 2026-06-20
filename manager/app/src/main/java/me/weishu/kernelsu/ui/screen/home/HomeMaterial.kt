@@ -144,7 +144,6 @@ fun HomePagerMaterial(
             }
             InfoCard(systemInfo = state.systemInfo)
             DonateCard(onOpenUrl = actions.onOpenUrl)
-            LearnMoreCard(onOpenUrl = actions.onOpenUrl)
             Spacer(Modifier.height(bottomInnerPadding))
         }
     }
@@ -444,29 +443,6 @@ private fun WarningCard(
 }
 
 @Composable
-private fun LearnMoreCard(onOpenUrl: (String) -> Unit) {
-    val url = stringResource(R.string.home_learn_kernelsu_url)
-    TonalCard(onClick = { onOpenUrl(url) }) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(text = stringResource(R.string.home_learn_kernelsu), style = MaterialTheme.typography.titleSmall)
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = stringResource(R.string.home_click_to_learn_kernelsu),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.outline
-                )
-            }
-        }
-    }
-}
-
-@Composable
 private fun DonateCard(onOpenUrl: (String) -> Unit) {
     TonalCard(onClick = { onOpenUrl("https://patreon.com/weishu") }) {
         Row(
@@ -523,7 +499,9 @@ private fun InfoCard(systemInfo: SystemInfo) {
                             text = content,
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.outline,
-                            modifier = Modifier.padding(top = 4.dp)
+                            modifier = Modifier.padding(top = 4.dp),
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
@@ -657,7 +635,6 @@ private fun HomeScreenPreviewContent(
             )
             InfoCard(previewSystemInfo.copy(selinuxStatus = selinuxStatus))
             DonateCard(onOpenUrl = {})
-            LearnMoreCard(onOpenUrl = {})
         }
     }
 }

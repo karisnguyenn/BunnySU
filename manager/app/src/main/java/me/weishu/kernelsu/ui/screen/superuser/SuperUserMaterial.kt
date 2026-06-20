@@ -94,7 +94,12 @@ fun SuperUserPagerMaterial(
         topBar = {
             SearchAppBar(
                 snackbarHostState = snackbarHostState,
-                title = { Text(stringResource(R.string.superuser)) },
+                title = { 
+                    Text(
+                        text = stringResource(R.string.superuser),
+                        fontWeight = FontWeight.Black
+                    ) 
+                },
                 searchText = localSearchText,
                 onSearchTextChange = {
                     localSearchText = it

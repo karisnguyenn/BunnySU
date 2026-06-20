@@ -358,7 +358,12 @@ private fun TopBar(
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
     LargeFlexibleTopAppBar(
-        title = { Text(stringResource(R.string.settings)) },
+        title = { 
+            Text(
+                text = stringResource(R.string.settings),
+                fontWeight = FontWeight.Black
+            ) 
+        },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface,
             scrolledContainerColor = MaterialTheme.colorScheme.surface

@@ -92,7 +92,12 @@ fun ExecuteModuleActionScreenMaterial(
         },
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.action)) },
+                title = { 
+                    Text(
+                        text = stringResource(R.string.action),
+                        fontWeight = FontWeight.Black
+                    ) 
+                },
                 navigationIcon = {
                     IconButton(onClick = actions.onBack) {
                         Icon(

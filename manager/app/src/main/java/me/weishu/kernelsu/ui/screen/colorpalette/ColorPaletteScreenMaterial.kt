@@ -122,7 +122,12 @@ fun ColorPaletteScreenMaterial(
                         onClick = actions.onBack
                     ) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null) }
                 },
-                title = { Text(stringResource(R.string.settings_theme)) },
+                title = { 
+                    Text(
+                        text = stringResource(R.string.settings_theme),
+                        fontWeight = FontWeight.Black
+                    ) 
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                     scrolledContainerColor = MaterialTheme.colorScheme.surface
