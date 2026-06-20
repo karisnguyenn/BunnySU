@@ -178,10 +178,18 @@ fun InstallScreen() {
         onNext = {
             val isLkmSelected = lkmSelection != LkmSelection.KmiNone
             val isKmiUnknown = currentKmi.isBlank()
-            val isSelectFileMode = installMethod is InstallMethod.SelectFile
-            if (!isLkmSelected && (isKmiUnknown || isSelectFileMode)) {
-                showChooseKmiDialog.value = true
+            
+            if (!isLkmSelected) {
+                if (!isKmiUnknown) {
+                    // NẾU ĐÃ BIẾT KMI: Tự động gán KMI của máy và tiến hành Flash luôn (BỎ QUA BẢNG HỎI)
+                    lkmSelection = LkmSelection.KmiString(currentKmi)
+                    onInstall()
+                } else {
+                    // CHỈ KHI NÀO app không đọc được KMI của máy thì mới phải hiện bảng để người dùng tự chọn
+                    showChooseKmiDialog.value = true
+                }
             } else {
+                // Nếu người dùng đã tự chọn file .ko từ trước rồi thì cài luôn
                 onInstall()
             }
         },
