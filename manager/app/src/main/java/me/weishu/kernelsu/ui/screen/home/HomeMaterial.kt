@@ -187,7 +187,6 @@ private fun TopBar(
 ) {
     LargeFlexibleTopAppBar(
         title = {
-            // Đã tùy biến Row để chứa Logo Thỏ Bunny và Font chữ Black
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -389,24 +388,30 @@ private fun StatusCard(
 }
 
 @Composable
-private fun WarningCard(
-    message: String,
-    color: Color = MaterialTheme.colorScheme.error,
-    onClick: (() -> Unit)? = null
+fun WarningCard(
+    message: String, color: Color = MaterialTheme.colorScheme.error, onClick: (() -> Unit)? = null
 ) {
-    val content = @Composable {
+    ElevatedCard(
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = color
+        )
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp)
+                .then(onClick?.let { Modifier.clickable { it() } } ?: Modifier)
+                .padding(24.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = message, style = MaterialTheme.typography.bodyMedium)
+            Icon(
+                imageVector = Icons.Filled.SentimentDissatisfied,
+                contentDescription = null,
+                 modifier = Modifier.padding(end = 20.dp)
+            )
+            Text(
+                text = message, style = MaterialTheme.typography.bodyMedium
+            )
         }
-    }
-    if (onClick != null) {
-        TonalCard(containerColor = color, onClick = onClick, content = content)
-    } else {
-        TonalCard(containerColor = color, content = content)
     }
 }
 
@@ -463,7 +468,6 @@ private fun InfoCard(systemInfo: SystemInfo) {
                 .fillMaxWidth()
                 .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 16.dp)
         ) {
-            // Hàm vẽ cấu hình đã được viết lại để hỗ trợ Icon và đổi Font
             @Composable
             fun InfoCardItem(label: String, content: String, icon: Any? = null) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -497,7 +501,6 @@ private fun InfoCard(systemInfo: SystemInfo) {
                 }
             }
 
-            // Gán Icon cho từng dòng giống bản tham khảo
             InfoCardItem(
                 label = stringResource(R.string.home_manager_version),
                 content = systemInfo.managerVersion,
@@ -507,7 +510,7 @@ private fun InfoCard(systemInfo: SystemInfo) {
             InfoCardItem(
                 label = stringResource(R.string.home_kernel),
                 content = systemInfo.kernelVersion,
-                icon = painterResource(R.drawable.ic_bunny_su)
+                icon = painterResource(R.drawable.ic_linux)
             )
             Spacer(Modifier.height(16.dp))
             InfoCardItem(
